@@ -1,0 +1,81 @@
+### Get all surveys
+GET http://localhost:8080/api/survey
+Content-Type: application/json
+
+
+### Create a new survey
+POST http://localhost:8080/api/survey
+Content-Type: application/json
+
+{
+  "name": "Customer Satisfaction Survey",
+  "description": "A survey to measure customer satisfaction."
+}
+
+
+### Get a specific survey by ID
+GET http://localhost:8080/api/survey/1
+Content-Type: application/json
+
+
+### Update a survey by ID
+PUT http://localhost:8080/api/survey/1
+Content-Type: application/json
+
+{
+  "name": "Updated Survey Name",
+  "description": "Updated survey description."
+}
+
+
+
+### Delete a survey by ID
+DELETE http://localhost:8080/api/survey/1
+Content-Type: application/json
+
+
+
+### Get all users
+GET http://localhost:8080/api/auth
+Content-Type: application/json
+
+###
+
+### Create a new user
+POST http://localhost:8080/api/auth
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "password": "securepassword123",
+  "phone": "1234567890",
+  "isAdmin": false
+}
+
+###
+
+### Get a specific user by ID
+GET http://localhost:8080/api/auth/67ab35c20db3070e66f79c56
+Content-Type: application/json
+
+###
+
+### Update a user by ID
+GET http://localhost:8080/api/auth/
+Content-Type: application/json
+
+
+# {
+#   "name": "John Updated",
+#   "email": "johnupdated@example.com",
+#   "password": "newpassword123",
+#   "phone": "987654321",
+#   "isAdmin": true
+# }
+
+###
+
+### Delete a user by ID
+DELETE http://localhost:8080/api/auth/67ab35c20db3070e66f79c56
+Content-Type: application/json
