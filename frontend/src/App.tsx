@@ -4,6 +4,7 @@ import User from './pages/User/User';
 import Login from './components/login';
 import Admin from './pages/Admin/Admin'
 import { useEffect, useState } from 'react';
+import EmployeeDashboard from './pages/Employee/EmployeeDashboard ';
 
 // Protected Route wrapper components
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
@@ -89,6 +90,7 @@ const App = () => {
         <Routes>
           {/* Public routes */}
           <Route path="/" element={<Home />} />
+          <Route path="/employee" element={<EmployeeDashboard />} />
           <Route path="/login" element={
             <PublicRoute>
               <Login />

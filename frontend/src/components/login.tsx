@@ -1,3 +1,4 @@
+// Modified AuthButton.tsx (optional, to match the theme)
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -8,7 +9,7 @@ import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import CreateUser from '../pages/Admin/CreateUser';
+import { Box, Paper } from '@mui/material';
 
 const AuthButton: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -57,18 +58,41 @@ const AuthButton: React.FC = () => {
         <>
             {isLoggedIn ? (
                 <Button 
-                    color="inherit"
+                    variant="outlined"
                     onClick={handleLogout}
+                    sx={{
+                        borderColor: "rgba(255,255,255,0.3)",
+                        color: "white",
+                        borderRadius: "8px",
+                        px: 2,
+                        "&:hover": {
+                            borderColor: "#4facfe",
+                            backgroundColor: "rgba(79,172,254,0.1)",
+                        }
+                    }}
                 >
                     Logout {userData?.name ? `(${userData.name})` : ''}
                 </Button>
             ) : (
                 <>
                     <Button 
-                        color="inherit"
+                        variant="contained"
                         onClick={() => setIsOpen(true)}
+                        sx={{
+                            background: "linear-gradient(90deg, #00c6ff 0%, #4facfe 100%)",
+                            color: "white",
+                            borderRadius: "8px",
+                            fontWeight: 600,
+                            px: 3,
+                            py: 1,
+                            boxShadow: "0 4px 15px rgba(0, 198, 255, 0.3)",
+                            "&:hover": {
+                                background: "linear-gradient(90deg, #4facfe 0%, #00c6ff 100%)",
+                                boxShadow: "0 6px 20px rgba(0, 198, 255, 0.4)",
+                            }
+                        }}
                     >
-                        Login
+                        Sign in
                     </Button>
 
                     <Dialog 
@@ -76,12 +100,19 @@ const AuthButton: React.FC = () => {
                         onClose={() => setIsOpen(false)}
                         maxWidth="xs"
                         fullWidth
+                        PaperProps={{
+                            sx: {
+                                background: "linear-gradient(135deg, #000428 0%, #004e92 100%)",
+                                borderRadius: "16px",
+                                boxShadow: "0 20px 80px rgba(0,0,0,0.5)",
+                            }
+                        }}
                     >
-                        <DialogTitle>Login</DialogTitle>
+                        <DialogTitle sx={{ color: "white", fontWeight: 600, pb: 1 }}>Sign in to your account</DialogTitle>
                         <form onSubmit={handleLogin}>
                             <DialogContent>
                                 {error && (
-                                    <Alert severity="error" sx={{ mb: 2 }}>
+                                    <Alert severity="error" sx={{ mb: 3, borderRadius: "8px" }}>
                                         {error}
                                     </Alert>
                                 )}
@@ -97,7 +128,26 @@ const AuthButton: React.FC = () => {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     required
-                                    sx={{ mb: 2 }}
+                                    sx={{ 
+                                        mb: 3,
+                                        '& .MuiOutlinedInput-root': {
+                                            '& fieldset': {
+                                                borderColor: 'rgba(255,255,255,0.2)',
+                                            },
+                                            '&:hover fieldset': {
+                                                borderColor: 'rgba(255,255,255,0.4)',
+                                            },
+                                            '&.Mui-focused fieldset': {
+                                                borderColor: '#4facfe',
+                                            },
+                                        },
+                                        '& .MuiInputLabel-root': {
+                                            color: 'rgba(255,255,255,0.7)',
+                                        },
+                                        '& .MuiInputBase-input': {
+                                            color: 'white',
+                                        },
+                                    }}
                                 />
                                 
                                 <TextField
@@ -110,20 +160,59 @@ const AuthButton: React.FC = () => {
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
+                                    sx={{ 
+                                        mb: 2,
+                                        '& .MuiOutlinedInput-root': {
+                                            '& fieldset': {
+                                                borderColor: 'rgba(255,255,255,0.2)',
+                                            },
+                                            '&:hover fieldset': {
+                                                borderColor: 'rgba(255,255,255,0.4)',
+                                            },
+                                            '&.Mui-focused fieldset': {
+                                                borderColor: '#4facfe',
+                                            },
+                                        },
+                                        '& .MuiInputLabel-root': {
+                                            color: 'rgba(255,255,255,0.7)',
+                                        },
+                                        '& .MuiInputBase-input': {
+                                            color: 'white',
+                                        },
+                                    }}
                                 />
                             </DialogContent>
                             
-                            <DialogActions sx={{ p: 2 }}>
-                                <Button onClick={() => setIsOpen(false)}>
+                            <DialogActions sx={{ p: 3, pt: 1 }}>
+                                <Button 
+                                    onClick={() => setIsOpen(false)}
+                                    sx={{ 
+                                        color: 'rgba(255,255,255,0.7)',
+                                        '&:hover': {
+                                            color: 'white',
+                                        }
+                                    }}
+                                >
                                     Cancel
                                 </Button>
                                 <Button 
                                     type="submit"
                                     variant="contained"
+                                    sx={{
+                                        background: "linear-gradient(90deg, #00c6ff 0%, #4facfe 100%)",
+                                        color: "white",
+                                        borderRadius: "8px",
+                                        fontWeight: 600,
+                                        px: 3,
+                                        boxShadow: "0 4px 15px rgba(0, 198, 255, 0.3)",
+                                        "&:hover": {
+                                            background: "linear-gradient(90deg, #4facfe 0%, #00c6ff 100%)",
+                                            boxShadow: "0 6px 20px rgba(0, 198, 255, 0.4)",
+                                        }
+                                    }}
                                 >
-                                    Login
+                                    Sign in
                                 </Button>
-                              
                             </DialogActions>
                         </form>
                     </Dialog>

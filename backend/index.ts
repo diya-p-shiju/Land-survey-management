@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import survey from './routes/survey_route';
 import user from './routes/user_route';
 import auth from './routes/auth_route'
+import employeeRoutes from './routes/employeeRoutes';
 
 
 // Load environment variables from .env file
@@ -31,9 +32,13 @@ app.get('/', (req, res) => {
 app.use("/api/auth", user);
 app.use("/api/survey", survey);
 app.use("/auth/login", auth);
+app.use("/api/employees", employeeRoutes);
 
 // Start server
 const PORT = 8080;
 app.listen(PORT, () => {    
   console.log(`Server is running on port ${PORT}`);
 });
+
+
+
