@@ -5,79 +5,37 @@ import Login from './components/login';
 import Admin from './pages/Admin/Admin'
 import { useEffect, useState } from 'react';
 import EmployeeDashboard from './pages/Employee/EmployeeDashboard ';
-
-// Protected Route wrapper components
-const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
-  const userDataString = localStorage.getItem('userData');
-  
-  if (!userDataString) {
-    return <Navigate to="/login" replace />;
-  }
-  
-  return children;
-};
-
-const AdminRoute = ({ children }: { children: JSX.Element }) => {
-  const userDataString = localStorage.getItem('userData');
-  const userData = userDataString ? JSON.parse(userDataString) : null;
-  
-  if (!userDataString) {
-    return <Navigate to="/login" replace />;
-  }
-  
-  if (!userData.isAdmin) {
-    return <Navigate to="/user" replace />;
-  }
-  
-  return children;
-};
-
-const UserRoute = ({ children }: { children: JSX.Element }) => {
-  const userDataString = localStorage.getItem('userData');
-  const userData = userDataString ? JSON.parse(userDataString) : null;
-  
-  
-  if (userData.isAdmin===true) {
-    return <Navigate to="/admin" replace />;
-  }
-  if (!userDataString) {
-    return <Navigate to="/login" replace />;
-  }
-  
-  return children;
-};
-
-// Public route wrapper to prevent logged-in users from accessing login page
-const PublicRoute = ({ children }: { children: JSX.Element }) => {
-  const userDataString = localStorage.getItem('userData');
-  const userData = userDataString ? JSON.parse(userDataString) : null;
-  
-  if (userData) {
-    return <Navigate to={userData.isAdmin ? "/admin" : "/user"} replace />;
-  }
-  
-  return children;
-};
+import EmployeeLogin from './pages/Employee/EmployeeLoginPage';
+import CreateUser from './pages/Admin/CreateUser';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
 
-  // Check authentication status when app loads
+  // Check for valid JSON in localStorage when app loads
   useEffect(() => {
-    const checkAuth = () => {
+    const checkLocalStorage = () => {
       try {
+        // Check user auth
         const userData = localStorage.getItem('userData');
         if (userData) {
           JSON.parse(userData); // Validate JSON format
         }
+        
+        // Check employee auth
+        const employeeData = localStorage.getItem('employeeData');
+        if (employeeData) {
+          JSON.parse(employeeData); // Validate JSON format
+        }
       } catch (error) {
         // If invalid JSON, clear localStorage
         localStorage.removeItem('userData');
+        localStorage.removeItem('employeeData');
+        localStorage.removeItem('token');
       }
       setIsLoading(false);
     };
 
-    checkAuth();
+    checkLocalStorage();
   }, []);
 
   if (isLoading) {
@@ -88,28 +46,17 @@ const App = () => {
     <div>
       <Router>
         <Routes>
-          {/* Public routes */}
+          {/* All routes are now direct, without protection wrappers */}
           <Route path="/" element={<Home />} />
-          <Route path="/employee" element={<EmployeeDashboard />} />
-          <Route path="/login" element={
-            <PublicRoute>
-              <Login />
-            </PublicRoute>
-          } />
-
-          {/* Protected routes */}
-          <Route path="/user" element={
-            <UserRoute>
-              <User />
-            </UserRoute>
-          } />
+          <Route path="/login" element={<EmployeeLogin />} />
+          <Route path="/signup" element={<CreateUser />} />
+          <Route path="/user" element={<User />} />
+          <Route path="/admin" element={<Admin />} />
           
-          <Route path="/admin" element={
-            // <AdminRoute>
-              <Admin />
-            // </AdminRoute>
-          } />
-
+          {/* Employee routes */}
+          <Route path="/employee/login" element={<EmployeeLogin />} />
+          <Route path="/employee/dashboard" element={<EmployeeDashboard />} />
+          
           {/* Fallback route */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

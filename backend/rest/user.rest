@@ -39,6 +39,11 @@ Content-Type: application/json
 GET http://localhost:8080/api/auth
 Content-Type: application/json
 
+
+### Get all users
+GET http://localhost:8080/api/employees
+Content-Type: application/json
+
 ###
 
 ### Create a new user

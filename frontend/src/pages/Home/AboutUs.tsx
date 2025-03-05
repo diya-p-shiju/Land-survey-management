@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Typography, Grid, Button } from "@mui/material";
+import landsurvey1 from "../../assets/landsurvey2.avif";
 
 const AboutUs = () => {
   return (
@@ -43,7 +44,7 @@ const AboutUs = () => {
                   left: 0,
                   width: "100%",
                   height: "100%",
-                  background: "url('https://source.unsplash.com/random/800x1000/?surveying') center/cover no-repeat",
+                  background: `url(${landsurvey1}) center/cover no-repeat`,
                 }}
               />
             </Box>
@@ -101,25 +102,7 @@ const AboutUs = () => {
               Whether you need boundary surveys, topographic surveys, or construction staking, we are here to help you with all your land surveying requirements.
             </Typography>
             
-            <Button
-              variant="outlined"
-              size="large"
-              sx={{
-                px: 4,
-                py: 1.5,
-                borderRadius: "30px",
-                fontSize: "1rem",
-                fontWeight: 600,
-                borderColor: "#4facfe",
-                color: "#4facfe",
-                "&:hover": {
-                  borderColor: "#00c6ff",
-                  backgroundColor: "rgba(79,172,254,0.1)",
-                },
-              }}
-            >
-              Learn More
-            </Button>
+        
           </Grid>
         </Grid>
       </Box>

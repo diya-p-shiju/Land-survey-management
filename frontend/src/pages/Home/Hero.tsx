@@ -1,8 +1,38 @@
-import React from "react";
-import { Box, Typography, Button } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, Typography, Button, Stack } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import survey from "../../assets/survey.webp";
+import BadgeIcon from '@mui/icons-material/Badge';
 
 const Hero = () => {
+  const navigate = useNavigate();
+  const [isEmployee, setIsEmployee] = useState(false);
+  
+  // Check if user is an authenticated employee
+  useEffect(() => {
+    const checkEmployeeAuth = () => {
+      const token = localStorage.getItem("token");
+      const employeeData = localStorage.getItem("employeeData");
+      if (token && employeeData) {
+        setIsEmployee(true);
+      } else {
+        setIsEmployee(false);
+      }
+    };
+    
+    checkEmployeeAuth();
+  }, []);
+
+  // Handle employee login navigation
+  const handleEmployeeLoginClick = () => {
+    navigate("/employee/login");
+  };
+
+  // Handle dashboard navigation for logged in employees
+  const handleDashboardClick = () => {
+    navigate("/employee/dashboard");
+  };
+
   return (
     <Box 
       id="hero" 
@@ -83,26 +113,31 @@ const Hero = () => {
               insights with our advanced precision surveying solutions.
             </Typography>
 
-            <Button
-              variant="contained"
-              size="large"
-              sx={{
-                px: 4,
-                py: 1.5,
-                borderRadius: "30px",
-                fontSize: "1rem",
-                fontWeight: 600,
-                background: "linear-gradient(90deg, #00c6ff 0%, #4facfe 100%)",
-                boxShadow: "0 4px 15px rgba(0, 198, 255, 0.3)",
-                "&:hover": {
-                  background: "linear-gradient(90deg, #4facfe 0%, #00c6ff 100%)",
-                  boxShadow: "0 8px 20px rgba(0, 198, 255, 0.5)",
-                },
-              }}
-            >
-              Get Started 
-              <Box component="span" sx={{ ml: 1, fontSize: "1.2rem" }}>+</Box>
-            </Button>
+            <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+              <Button
+                variant="contained"
+                size="large"
+                sx={{
+                  px: 4,
+                  py: 1.5,
+                  borderRadius: "30px",
+                  fontSize: "1rem",
+                  fontWeight: 600,
+                  background: "linear-gradient(90deg, #00c6ff 0%, #4facfe 100%)",
+                  boxShadow: "0 4px 15px rgba(0, 198, 255, 0.3)",
+                  "&:hover": {
+                    background: "linear-gradient(90deg, #4facfe 0%, #00c6ff 100%)",
+                    boxShadow: "0 8px 20px rgba(0, 198, 255, 0.5)",
+                  },
+                }}
+                onClick={handleEmployeeLoginClick}
+              >
+                Get Started 
+                <Box component="span" sx={{ ml: 1, fontSize: "1.2rem" }}>+</Box>
+              </Button>
+              
+           
+            </Stack>
           </Box>
 
           <Box 
